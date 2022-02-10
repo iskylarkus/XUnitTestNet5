@@ -17,7 +17,7 @@ namespace XUnitTestNet5.Test
             var total = calculator.Add(a, b);
 
             //Assert
-            Assert.Equal<int>(25, total);
+            Assert.NotEqual<int>(29, total);
         }
     }
 }
