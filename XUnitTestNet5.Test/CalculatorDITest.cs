@@ -71,13 +71,13 @@ namespace XUnitTestNet5.Test
 
         [Theory]
         [InlineData(19, 11, 33)]
-        public void Multiply_SimpleValues_ReturnMultipliedValue(int a, int b, int expectedTotal)
+        public void Multiply_SimpleValues_ReturnMultipliedValue(int a, int b, int expectedMultiplied)
         {
-            _mock.Setup(x => x.Multiply(a, b)).Returns(expectedTotal);
+            _mock.Setup(x => x.Multiply(a, b)).Returns(expectedMultiplied);
 
-            var actualTotal = _calculator.Multiply(a, b);
+            var actualMultiply = _calculator.Multiply(a, b);
 
-            Assert.Equal(expectedTotal, actualTotal);
+            Assert.Equal(expectedMultiplied, actualMultiply);
         }
 
         [Theory]
@@ -91,6 +91,21 @@ namespace XUnitTestNet5.Test
             Exception exception = Assert.Throws<Exception>(() => _calculator.Multiply(a, b));
 
             Assert.Equal(error, exception.Message);
+        }
+
+        [Theory]
+        [InlineData(19, 11, 209)]
+        public void Multiply_CallbackValues_ReturnMultipliedValue(int a, int b, int expectedMultiplied)
+        {
+            int actualMultiply = 0;
+
+            _mock.Setup(x => x.Multiply(It.IsAny<int>(), It.IsAny<int>())).Callback<int, int>((x, y) => actualMultiply = x * y);
+
+            _calculator.Multiply(a, b);
+            Assert.Equal(expectedMultiplied, actualMultiply);
+
+            _calculator.Multiply(5, 20);
+            Assert.Equal(100, actualMultiply);
         }
     }
 }
