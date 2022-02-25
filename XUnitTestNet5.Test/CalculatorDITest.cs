@@ -53,6 +53,8 @@ namespace XUnitTestNet5.Test
             var actualTotal = _calculator.Add(a, b);
 
             Assert.Equal(expectedTotal, actualTotal);
+
+            _mock.Verify(x => x.Add(a,b), Times.Once);
         }
 
         [Theory]
