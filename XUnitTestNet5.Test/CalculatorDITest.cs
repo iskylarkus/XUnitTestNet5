@@ -1,4 +1,5 @@
 ﻿using Moq;
+using System;
 using Xunit;
 using XUnitTestNet5.App;
 
@@ -70,13 +71,26 @@ namespace XUnitTestNet5.Test
 
         [Theory]
         [InlineData(19, 11, 33)]
-        public void Add_MultiplyValues_ReturnTotalValue(int a, int b, int expectedTotal)
+        public void Multiply_SimpleValues_ReturnMultipliedValue(int a, int b, int expectedTotal)
         {
             _mock.Setup(x => x.Multiply(a, b)).Returns(expectedTotal);
 
             var actualTotal = _calculator.Multiply(a, b);
 
             Assert.Equal(expectedTotal, actualTotal);
+        }
+
+        [Theory]
+        [InlineData(0, 35)]
+        public void Multiply_ZeroValue_ReturnException(int a, int b)
+        {
+            string error = "a=0 olamaz..!";
+
+            _mock.Setup(x => x.Multiply(a, b)).Throws(new Exception(error));
+
+            Exception exception = Assert.Throws<Exception>(() => _calculator.Multiply(a, b));
+
+            Assert.Equal(error, exception.Message);
         }
     }
 }
