@@ -1,5 +1,4 @@
 ﻿using Xunit;
-using XUnitTestNet5.App;
 
 namespace XUnitTestNet5.Test
 {
@@ -8,61 +7,25 @@ namespace XUnitTestNet5.Test
         [Fact]
         public void EqualPassedTest()
         {
-            //Arrange
-            int a = 5;
-            int b = 20;
-            var calculator = new Calculator();
-
-            //Act
-            var total = calculator.Add(a, b);
-
-            //Assert
-            Assert.Equal<int>(25, total);
+            Assert.Equal(25, 25);
         }
 
         [Fact]
         public void EqualFailedTest()
         {
-            //Arrange
-            int a = 5;
-            int b = 20;
-            var calculator = new Calculator();
-
-            //Act
-            var total = calculator.Add(a, b);
-
-            //Assert
-            Assert.Equal<int>(29, total);
+            Assert.Equal<int>(25, 10);
         }
 
         [Fact]
         public void NotEqualPassedTest()
         {
-            //Arrange
-            int a = 5;
-            int b = 20;
-            var calculator = new Calculator();
-
-            //Act
-            var total = calculator.Add(a, b);
-
-            //Assert
-            Assert.NotEqual<int>(29, total);
+            Assert.NotEqual(25, 10);
         }
 
         [Fact]
         public void NotEqualFailedTest()
         {
-            //Arrange
-            int a = 5;
-            int b = 20;
-            var calculator = new Calculator();
-
-            //Act
-            var total = calculator.Add(a, b);
-
-            //Assert
-            Assert.NotEqual<int>(25, total);
+            Assert.NotEqual<int>(25, 25);
         }
     }
 }
