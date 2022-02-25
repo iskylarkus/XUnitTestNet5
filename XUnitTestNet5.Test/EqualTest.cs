@@ -6,7 +6,7 @@ namespace XUnitTestNet5.Test
     public class EqualTest
     {
         [Fact]
-        public void RunEqualPassedTest()
+        public void EqualPassedTest()
         {
             //Arrange
             int a = 5;
@@ -21,7 +21,7 @@ namespace XUnitTestNet5.Test
         }
 
         [Fact]
-        public void RunEqualFailedTest()
+        public void EqualFailedTest()
         {
             //Arrange
             int a = 5;
@@ -36,7 +36,7 @@ namespace XUnitTestNet5.Test
         }
 
         [Fact]
-        public void RunNotEqualPassedTest()
+        public void NotEqualPassedTest()
         {
             //Arrange
             int a = 5;
@@ -51,7 +51,7 @@ namespace XUnitTestNet5.Test
         }
 
         [Fact]
-        public void RunNotEqualFailedTest()
+        public void NotEqualFailedTest()
         {
             //Arrange
             int a = 5;
