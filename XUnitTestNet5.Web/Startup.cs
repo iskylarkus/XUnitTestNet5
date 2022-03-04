@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using XUnitTestNet5.Web.Models;
+using XUnitTestNet5.Web.Repository;
 
 namespace XUnitTestNet5.Web
 {
@@ -25,6 +26,8 @@ namespace XUnitTestNet5.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
             services.AddDbContext<XUnitTestNet5Context>(options =>
             {
                 options.UseSqlServer(Configuration["SqlConStr"]);
