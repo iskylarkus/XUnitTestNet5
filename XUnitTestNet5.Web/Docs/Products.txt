@@ -1,0 +1,19 @@
+﻿-- CREATE DATABASE [XUnitTestNet5]
+-- DROP TABLE [dbo].[Products]
+CREATE TABLE [dbo].[Products]
+(
+	[Id] INT NOT NULL IDENTITY(1,1) PRIMARY KEY, 
+    [Name] NVARCHAR(200) NULL, 
+    [Price] DECIMAL(18, 2) NULL, 
+    [Stock] INT NULL, 
+    [Color] NVARCHAR(50) NULL,
+	CONSTRAINT PK_Products PRIMARY KEY CLUSTERED (Id)
+)
+
+--Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=XUnitTestNet5;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False
+
+package manager
+PM>
+
+Scaffold-DbContext "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=XUnitTestNet5;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
+
