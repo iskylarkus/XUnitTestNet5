@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Moq;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 using XUnitTestNet5.Web.Controllers;
 using XUnitTestNet5.Web.Models;
@@ -31,6 +32,20 @@ namespace XUnitTestNet5.Web.Test
             var result = await _productsController.Index();
 
             Assert.IsType<ViewResult>(result);
+        }
+
+        [Fact]
+        public async void Index_ActionExecutes_ReturnProductList()
+        {
+            _mockRepository.Setup(repo => repo.GetAll()).ReturnsAsync(_products);
+
+            var result = await _productsController.Index();
+
+            var viewResult = Assert.IsType<ViewResult>(result);
+
+            var productList = Assert.IsAssignableFrom<IEnumerable<Product>>(viewResult.Model);
+
+            Assert.Equal(2, productList.Count());
         }
     }
 }
