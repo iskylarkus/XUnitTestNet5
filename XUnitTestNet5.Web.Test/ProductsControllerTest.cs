@@ -1,5 +1,7 @@
-﻿using Moq;
+﻿using Microsoft.AspNetCore.Mvc;
+using Moq;
 using System.Collections.Generic;
+using Xunit;
 using XUnitTestNet5.Web.Controllers;
 using XUnitTestNet5.Web.Models;
 using XUnitTestNet5.Web.Repository;
@@ -21,6 +23,14 @@ namespace XUnitTestNet5.Web.Test
                 new Product() { Id = 1, Name = "Kalem", Color = "Kırmızı", Price = 11, Stock = 1111},
                 new Product() { Id = 2, Name = "Silgi", Color = "Sarı", Price = 19, Stock = 1919},
             };
+        }
+
+        [Fact]
+        public async void Index_ActionExecutes_ReturnView()
+        {
+            var result = await _productsController.Index();
+
+            Assert.IsType<ViewResult>(result);
         }
     }
 }
