@@ -121,7 +121,7 @@ namespace XUnitTestNet5.Web.Test
         }
 
         [Fact]
-        public async void CreatePOST_ValidModelState_CreateMethodExecutes()
+        public async void CreatePOST_ValidModelState_CreateMethodExecute()
         {
             Product product = null;
 
@@ -132,6 +132,16 @@ namespace XUnitTestNet5.Web.Test
             _mockRepository.Verify(x => x.Create(It.IsAny<Product>()), Times.Once);
 
             Assert.Equal(_products.First().Id, product.Id);
+        }
+
+        [Fact]
+        public async void CreatePOST_InValidModelState_NeverCreateExecute()
+        {
+            _productsController.ModelState.AddModelError("Name", "Name field is required!");
+
+            var result = await _productsController.Create(_products.First());
+
+            _mockRepository.Verify(x => x.Create(It.IsAny<Product>()), Times.Never);
         }
     }
 }
