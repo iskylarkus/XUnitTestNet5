@@ -89,5 +89,13 @@ namespace XUnitTestNet5.Web.Test
             Assert.Equal(product.Id, resultProduct.Id);
             Assert.Equal(product.Name, resultProduct.Name);
         }
+
+        [Fact]
+        public void Create_ActionExecutes_ReturnView()
+        {
+            var result = _productsController.Create();
+
+            Assert.IsType<ViewResult>(result);
+        }
     }
 }
