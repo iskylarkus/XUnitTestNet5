@@ -119,5 +119,19 @@ namespace XUnitTestNet5.Web.Test
 
             Assert.Equal("Index", redirect.ActionName);
         }
+
+        [Fact]
+        public async void CreatePOST_ValidModelState_CreateMethodExecutes()
+        {
+            Product product = null;
+
+            _mockRepository.Setup(x => x.Create(It.IsAny<Product>())).Callback<Product>(x => product = x);
+
+            var result = await _productsController.Create(_products.First());
+
+            _mockRepository.Verify(x => x.Create(It.IsAny<Product>()), Times.Once);
+
+            Assert.Equal(_products.First().Id, product.Id);
+        }
     }
 }
