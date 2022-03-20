@@ -97,5 +97,17 @@ namespace XUnitTestNet5.Web.Test
 
             Assert.IsType<ViewResult>(result);
         }
+
+        [Fact]
+        public async void Create_InValidModelState_ReturnView()
+        {
+            _productsController.ModelState.AddModelError("Name", "Name field is required!");
+
+            var result = await _productsController.Create(_products.First());
+
+            var viewResult = Assert.IsType<ViewResult>(result);
+
+            Assert.IsType<Product>(viewResult.Model);
+        }
     }
 }
