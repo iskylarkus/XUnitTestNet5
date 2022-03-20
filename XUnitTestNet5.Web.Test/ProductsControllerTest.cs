@@ -17,7 +17,7 @@ namespace XUnitTestNet5.Web.Test
 
         public ProductsControllerTest()
         {
-            _mockRepository = new Mock<IRepository<Product>>();
+            _mockRepository = new Mock<IRepository<Product>>(MockBehavior.Loose);
             _productsController = new ProductsController(_mockRepository.Object);
             _products = new List<Product>()
             {
@@ -108,6 +108,16 @@ namespace XUnitTestNet5.Web.Test
             var viewResult = Assert.IsType<ViewResult>(result);
 
             Assert.IsType<Product>(viewResult.Model);
+        }
+
+        [Fact]
+        public async void Create_ValidModelState_ReturnRedirectToIndexAction()
+        {
+            var result = await _productsController.Create(_products.First());
+
+            var redirect = Assert.IsType<RedirectToActionResult>(result);
+
+            Assert.Equal("Index", redirect.ActionName);
         }
     }
 }
