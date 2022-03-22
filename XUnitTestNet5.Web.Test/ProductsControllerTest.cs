@@ -153,5 +153,20 @@ namespace XUnitTestNet5.Web.Test
 
             Assert.Equal("Index", redirect.ActionName);
         }
+
+        [Theory]
+        [InlineData(5)]
+        public async void Edit_IdInValid_ReturnNotFound(int productId)
+        {
+            Product product = null;
+
+            _mockRepository.Setup(x => x.GetById(productId)).ReturnsAsync(product);
+
+            var result = await _productsController.Edit(productId);
+
+            var redirect = Assert.IsType<NotFoundResult>(result);
+
+            Assert.Equal<int>(404, redirect.StatusCode);
+        }
     }
 }
