@@ -143,5 +143,15 @@ namespace XUnitTestNet5.Web.Test
 
             _mockRepository.Verify(x => x.Create(It.IsAny<Product>()), Times.Never);
         }
+
+        [Fact]
+        public async void Edit_IdIsNull_ReturnRedirectToIndexAction()
+        {
+            var result = await _productsController.Edit(null);
+
+            var redirect = Assert.IsType<RedirectToActionResult>(result);
+
+            Assert.Equal("Index", redirect.ActionName);
+        }
     }
 }
