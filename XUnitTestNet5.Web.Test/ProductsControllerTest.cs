@@ -219,5 +219,18 @@ namespace XUnitTestNet5.Web.Test
 
             Assert.Equal("Index", redirect.ActionName);
         }
+
+        [Theory]
+        [InlineData(1)]
+        public void EditPOST_ValidModelState_UpdateMethodExecute(int productId)
+        {
+            Product product = _products.First(x => x.Id == productId);
+
+            _mockRepository.Setup(x => x.Update(product));
+
+            _productsController.Edit(productId, product);
+
+            _mockRepository.Verify(x => x.Update(It.IsAny<Product>()), Times.Once);
+        }
     }
 }
