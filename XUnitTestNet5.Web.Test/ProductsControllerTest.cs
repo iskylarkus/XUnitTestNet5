@@ -232,5 +232,13 @@ namespace XUnitTestNet5.Web.Test
 
             _mockRepository.Verify(x => x.Update(It.IsAny<Product>()), Times.Once);
         }
+
+        [Fact]
+        public async void Delete_IdIsNull_ReturnNotFound()
+        {
+            var result = await _productsController.Delete(null);
+
+            Assert.IsType<NotFoundResult>(result);
+        }
     }
 }
