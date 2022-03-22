@@ -282,5 +282,18 @@ namespace XUnitTestNet5.Web.Test
 
             Assert.IsType<RedirectToActionResult>(result);
         }
+
+        [Theory]
+        [InlineData(1)]
+        public async void DeleteConfirmed_ActionExecutes_DeleteMethodExecute(int productId)
+        {
+            Product product = _products.First(x => x.Id == productId);
+
+            _mockRepository.Setup(x => x.Delete(product));
+
+            await _productsController.DeleteConfirmed(productId);
+
+            _mockRepository.Verify(x => x.Delete(It.IsAny<Product>()), Times.Once);
+        }
     }
 }
