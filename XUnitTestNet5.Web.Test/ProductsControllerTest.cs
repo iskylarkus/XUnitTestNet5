@@ -255,5 +255,23 @@ namespace XUnitTestNet5.Web.Test
 
             Assert.Equal<int>(404, redirect.StatusCode);
         }
+
+        [Theory]
+        [InlineData(1)]
+        public async void Delete_IdValid_ReturnProduct(int productId)
+        {
+            Product product = _products.First(x => x.Id == productId);
+
+            _mockRepository.Setup(x => x.GetById(productId)).ReturnsAsync(product);
+
+            var result = await _productsController.Delete(productId);
+
+            var viewResult = Assert.IsType<ViewResult>(result);
+
+            var resultProduct = Assert.IsAssignableFrom<Product>(viewResult.Model);
+
+            Assert.Equal(product.Id, resultProduct.Id);
+            Assert.Equal(product.Name, resultProduct.Name);
+        }
     }
 }
