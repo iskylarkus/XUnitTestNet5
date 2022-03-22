@@ -195,5 +195,18 @@ namespace XUnitTestNet5.Web.Test
 
             var redirect = Assert.IsType<NotFoundResult>(result);
         }
+
+        [Theory]
+        [InlineData(1)]
+        public void EditPOST_InValidModelState_ReturnView(int productId)
+        {
+            _productsController.ModelState.AddModelError("Name", "Name field is required!");
+
+            var result = _productsController.Edit(productId, _products.First(x => x.Id == productId));
+
+            var viewResult = Assert.IsType<ViewResult>(result);
+
+            Assert.IsType<Product>(viewResult.Model);
+        }
     }
 }
