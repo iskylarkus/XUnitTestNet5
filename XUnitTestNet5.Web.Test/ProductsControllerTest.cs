@@ -273,5 +273,14 @@ namespace XUnitTestNet5.Web.Test
             Assert.Equal(product.Id, resultProduct.Id);
             Assert.Equal(product.Name, resultProduct.Name);
         }
+
+        [Theory]
+        [InlineData(1)]
+        public async void DeleteConfirmed_ActionExecutes_ReturnRedirectToIndexAction(int productId)
+        {
+            var result = await _productsController.DeleteConfirmed(productId);
+
+            Assert.IsType<RedirectToActionResult>(result);
+        }
     }
 }
