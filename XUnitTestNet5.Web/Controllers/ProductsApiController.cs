@@ -66,7 +66,7 @@ namespace XUnitTestNet5.Web.Controllers
 
         // DELETE: api/ProductsApi/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProduct(int id)
+        public async Task<ActionResult<Product>> DeleteProduct(int id)
         {
             var product = await _repository.GetById(id);
 

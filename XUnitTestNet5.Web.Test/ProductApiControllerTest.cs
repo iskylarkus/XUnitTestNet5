@@ -114,5 +114,18 @@ namespace XUnitTestNet5.Web.Test
 
             Assert.Equal("GetProduct", createdAtActionResult.ActionName);
         }
+
+        [Theory]
+        [InlineData(0)]
+        public async void DeleteProduct_IdInValid_ReturnNotFound(int productId)
+        {
+            Product product = null;
+
+            _mock.Setup(x => x.GetById(productId)).ReturnsAsync(product);
+
+            var result = await _controller.DeleteProduct(productId);
+
+            Assert.IsType<NotFoundResult>(result.Result);
+        }
     }
 }
