@@ -39,5 +39,18 @@ namespace XUnitTestNet5.Web.Test
 
             Assert.Equal<int>(2, returnProducts.ToList().Count);
         }
+
+        [Theory]
+        [InlineData(0)]
+        public async void GetProduct_IdInValid_ReturnNotFound(int productId)
+        {
+            Product product = null;
+
+            _mock.Setup(x => x.GetById(productId)).ReturnsAsync(product);
+
+            var result = await _controller.GetProduct(productId);
+
+            Assert.IsType<NotFoundResult>(result);
+        }
     }
 }
