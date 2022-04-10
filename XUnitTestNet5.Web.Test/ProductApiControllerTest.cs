@@ -58,7 +58,7 @@ namespace XUnitTestNet5.Web.Test
         [InlineData(2)]
         public async void GetProduct_IdValid_ReturnOkObjectResult(int productId)
         {
-            var product = _products.Find(x => x.Id == productId);
+            var product = _products.First(x => x.Id == productId);
 
             _mock.Setup(x => x.GetById(productId)).ReturnsAsync(product);
 
