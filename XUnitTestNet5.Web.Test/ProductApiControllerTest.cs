@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 using XUnitTestNet5.Web.Controllers;
+using XUnitTestNet5.Web.Helpers;
 using XUnitTestNet5.Web.Models;
 using XUnitTestNet5.Web.Repository;
 
@@ -16,6 +17,8 @@ namespace XUnitTestNet5.Web.Test
         private readonly ProductsApiController _controller;
         private List<Product> _products;
 
+        private readonly Helper _helper;
+
         public ProductApiControllerTest()
         {
             _mock = new Mock<IRepository<Product>>();
@@ -25,6 +28,8 @@ namespace XUnitTestNet5.Web.Test
                 new Product() { Id = 1, Name = "Kalem", Color = "Kırmızı", Price = 11, Stock = 1111},
                 new Product() { Id = 2, Name = "Silgi", Color = "Sarı", Price = 19, Stock = 1919},
             };
+
+            _helper = new Helper();
         }
 
         [Fact]
@@ -143,6 +148,15 @@ namespace XUnitTestNet5.Web.Test
             _mock.Verify(x => x.Delete(product), Times.Once);
 
             Assert.IsType<NoContentResult>(result.Result);
+        }
+
+        [Theory]
+        [InlineData(4,5,9)]
+        public void Add_SampleValues_ReturnTotal(int a, int b, int total)
+        {
+            var result = _helper.Add(a, b);
+
+            Assert.Equal<int>(total, result);
         }
     }
 }

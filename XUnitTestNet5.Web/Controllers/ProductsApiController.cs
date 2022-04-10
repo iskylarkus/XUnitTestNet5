@@ -86,5 +86,11 @@ namespace XUnitTestNet5.Web.Controllers
 
             return product != null;
         }
+
+        [HttpGet("{a}/{b}")]
+        public IActionResult Add(int a, int b)
+        {
+            return Ok(new Helpers.Helper().Add(a, b));
+        }
     }
 }
