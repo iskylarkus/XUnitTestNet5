@@ -2,6 +2,7 @@
 using Moq;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 using XUnitTestNet5.Web.Controllers;
 using XUnitTestNet5.Web.Models;
@@ -96,6 +97,22 @@ namespace XUnitTestNet5.Web.Test
             _mock.Verify(x => x.Update(product), Times.Once);
 
             Assert.IsType<NoContentResult>(result);
+        }
+
+        [Fact]
+        public async void PostProduct_ActionExecutes_ReturnCreatedAtActionResult()
+        {
+            var product = _products.First();
+
+            _mock.Setup(x => x.Create(product)).Returns(Task.CompletedTask);
+
+            var result = await _controller.PostProduct(product);
+
+            _mock.Verify(x => x.Create(product), Times.Once);
+
+            var createdAtActionResult = Assert.IsType<CreatedAtActionResult>(result);
+
+            Assert.Equal("GetProduct", createdAtActionResult.ActionName);
         }
     }
 }
