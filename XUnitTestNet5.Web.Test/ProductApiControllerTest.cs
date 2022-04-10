@@ -71,5 +71,16 @@ namespace XUnitTestNet5.Web.Test
             Assert.Equal(productId, returnProduct.Id);
             Assert.Equal(product.Name, returnProduct.Name);
         }
+
+        [Theory]
+        [InlineData(1)]
+        public void PutProduct_IdIsNotEqualProduct_ReturnBadRequestResult(int productId)
+        {
+            var product = _products.First(x => x.Id == productId);
+
+            var result = _controller.PutProduct(2, product);
+
+            Assert.IsType<BadRequestResult>(result);
+        }
     }
 }
