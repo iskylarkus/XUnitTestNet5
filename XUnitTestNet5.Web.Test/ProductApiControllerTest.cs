@@ -127,5 +127,22 @@ namespace XUnitTestNet5.Web.Test
 
             Assert.IsType<NotFoundResult>(result.Result);
         }
+
+        [Theory]
+        [InlineData(1)]
+        public async void DeleteProduct_ActionExecutes_ReturnNoContentResult(int productId)
+        {
+            var product = _products.First(x => x.Id == productId);
+
+            _mock.Setup(x => x.GetById(productId)).ReturnsAsync(product);
+
+            _mock.Setup(x => x.Delete(product));
+
+            var result = await _controller.DeleteProduct(productId);
+
+            _mock.Verify(x => x.Delete(product), Times.Once);
+
+            Assert.IsType<NoContentResult>(result.Result);
+        }
     }
 }
