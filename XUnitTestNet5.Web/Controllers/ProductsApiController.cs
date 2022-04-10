@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using XUnitTestNet5.Web.Models;
+using XUnitTestNet5.Web.Repository;
 
 namespace XUnitTestNet5.Web.Controllers
 {
@@ -13,61 +9,47 @@ namespace XUnitTestNet5.Web.Controllers
     [ApiController]
     public class ProductsApiController : ControllerBase
     {
-        private readonly XUnitTestNet5Context _context;
+        private readonly IRepository<Product> _repository;
 
-        public ProductsApiController(XUnitTestNet5Context context)
+        public ProductsApiController(IRepository<Product> repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         // GET: api/ProductsApi
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        public async Task<IActionResult> GetProducts()
         {
-            return await _context.Products.ToListAsync();
+            var products = await _repository.GetAll();
+
+            return Ok(products);
         }
 
         // GET: api/ProductsApi/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        public async Task<IActionResult> GetProduct(int id)
         {
-            var product = await _context.Products.FindAsync(id);
+            var product = await _repository.GetById(id);
 
             if (product == null)
             {
                 return NotFound();
             }
 
-            return product;
+            return Ok(product);
         }
 
         // PUT: api/ProductsApi/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Product product)
+        public IActionResult PutProduct(int id, Product product)
         {
             if (id != product.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(product).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProductExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            _repository.Update(product);
 
             return NoContent();
         }
@@ -75,10 +57,9 @@ namespace XUnitTestNet5.Web.Controllers
         // POST: api/ProductsApi
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
+        public async Task<ActionResult> PostProduct(Product product)
         {
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
+            await _repository.Create(product);
 
             return CreatedAtAction("GetProduct", new { id = product.Id }, product);
         }
@@ -87,21 +68,23 @@ namespace XUnitTestNet5.Web.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
-            var product = await _context.Products.FindAsync(id);
+            var product = await _repository.GetById(id);
+
             if (product == null)
             {
                 return NotFound();
             }
 
-            _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
+            _repository.Delete(product);
 
             return NoContent();
         }
 
         private bool ProductExists(int id)
         {
-            return _context.Products.Any(e => e.Id == id);
+            Product product = _repository.GetById(id).Result;
+
+            return product != null;
         }
     }
 }
