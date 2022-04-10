@@ -52,5 +52,24 @@ namespace XUnitTestNet5.Web.Test
 
             Assert.IsType<NotFoundResult>(result);
         }
+
+        [Theory]
+        [InlineData(1)]
+        [InlineData(2)]
+        public async void GetProduct_IdValid_ReturnOkObjectResult(int productId)
+        {
+            var product = _products.Find(x => x.Id == productId);
+
+            _mock.Setup(x => x.GetById(productId)).ReturnsAsync(product);
+
+            var result = await _controller.GetProduct(productId);
+
+            var okResult = Assert.IsType<OkObjectResult>(result);
+
+            var returnProduct = Assert.IsType<Product>(okResult.Value);
+
+            Assert.Equal(productId, returnProduct.Id);
+            Assert.Equal(product.Name, returnProduct.Name);
+        }
     }
 }
