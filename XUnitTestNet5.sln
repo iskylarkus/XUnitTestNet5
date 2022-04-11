@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XUnitTestNet5.Test", "XUnit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XUnitTestNet5.Web", "XUnitTestNet5.Web\XUnitTestNet5.Web.csproj", "{9E952D59-0620-441F-A768-3D7FAD6DCB5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTestNet5.Web.Test", "XUnitTestNet5.Web.Test\XUnitTestNet5.Web.Test.csproj", "{03831B55-2E32-49CF-B1B4-E7D4AA87E3B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XUnitTestNet5.Web.Test", "XUnitTestNet5.Web.Test\XUnitTestNet5.Web.Test.csproj", "{03831B55-2E32-49CF-B1B4-E7D4AA87E3B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
