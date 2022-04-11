@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 using XUnitTestNet5.Web.Models;
 using XUnitTestNet5.Web.Repository;
 
@@ -143,7 +139,7 @@ namespace XUnitTestNet5.Web.Controllers
         private bool ProductExists(int id)
         {
             var product = _repository.GetById(id).Result;
-            return product == null ? false:true;
+            return product == null ? false : true;
         }
     }
 }

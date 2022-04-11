@@ -8,7 +8,7 @@ namespace XUnitTestNet5.Test
         [Fact]
         public void SinglePassedTest()
         {
-            Assert.Single(new List<string>() { "ilker"});
+            Assert.Single(new List<string>() { "ilker" });
         }
 
         [Fact]

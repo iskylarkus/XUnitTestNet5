@@ -151,7 +151,7 @@ namespace XUnitTestNet5.Web.Test
         }
 
         [Theory]
-        [InlineData(4,5,9)]
+        [InlineData(4, 5, 9)]
         public void Add_SampleValues_ReturnTotal(int a, int b, int total)
         {
             var result = _helper.Add(a, b);

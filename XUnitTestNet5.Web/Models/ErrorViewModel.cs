@@ -1,5 +1,3 @@
-using System;
-
 namespace XUnitTestNet5.Web.Models
 {
     public class ErrorViewModel

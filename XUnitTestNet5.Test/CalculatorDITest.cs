@@ -49,13 +49,13 @@ namespace XUnitTestNet5.Test
         [InlineData(35, 42, 77)]
         public void Add_SimpleValues_ReturnTotalValue(int a, int b, int expectedTotal)
         {
-            _mock.Setup(x => x.Add(a,b)).Returns(expectedTotal);
+            _mock.Setup(x => x.Add(a, b)).Returns(expectedTotal);
 
             var actualTotal = _calculator.Add(a, b);
 
             Assert.Equal(expectedTotal, actualTotal);
 
-            _mock.Verify(x => x.Add(a,b), Times.Once);
+            _mock.Verify(x => x.Add(a, b), Times.Once);
         }
 
         [Theory]
